@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaCalendar, FaMoneyBillWave } from 'react-icons/fa';
-import Card from '../common/Card';
+import { FaMapMarkerAlt, FaCalendar, FaMoneyBillWave, FaTimes } from 'react-icons/fa';
 import { portfolios, categories } from '../../data/portfolio';
 
 const PortfolioSection = () => {
@@ -14,32 +13,33 @@ const PortfolioSection = () => {
       : portfolios.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="portfolio" className="py-20 bg-light">
-      <div className="container mx-auto px-4">
+    <section id="portfolio" className="section-padding bg-white">
+      <div className="container mx-auto">
+        {/* 섹션 헤더 */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-dark mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             주요 시공 실적
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-            성과로 증명된 시공력. 산업시설부터 교회, 공공기관까지 100여 건의
-            프로젝트 실적.
+          <p className="text-lg text-gray-600 mb-8">
+            성과로 증명된 시공력. 산업시설부터 교회, 공공기관까지<br/>100여 건의 프로젝트 실적.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {/* 카테고리 필터 */}
+          <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   selectedCategory === category
-                    ? 'bg-primary text-white shadow-lg'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                    ? 'bg-primary-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {category}
@@ -48,115 +48,111 @@ const PortfolioSection = () => {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 포트폴리오 그리드 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPortfolios.map((project, index) => (
-            <Card
+            <motion.div
               key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              viewport={{ once: true }}
               onClick={() => setSelectedProject(project)}
-              className="cursor-pointer"
+              className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
             >
-              <div className="h-48 bg-gradient-to-br from-primary to-blue-700 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                <div className="text-white text-center p-6">
-                  <h3 className="font-bold text-xl mb-2">{project.title}</h3>
-                  <span className="inline-block bg-secondary px-3 py-1 rounded-full text-sm">
-                    {project.category}
-                  </span>
-                </div>
+              {/* 프로젝트 헤더 */}
+              <div className="bg-primary-600 text-white p-6">
+                <span className="inline-block bg-white/20 px-3 py-1 rounded-full text-xs mb-3">
+                  {project.category}
+                </span>
+                <h3 className="font-bold text-lg">{project.title}</h3>
               </div>
 
-              <h4 className="font-bold text-lg text-dark mb-2">
-                {project.client}
-              </h4>
+              {/* 프로젝트 정보 */}
+              <div className="p-6">
+                <p className="font-semibold text-gray-900 mb-4">{project.client}</p>
 
-              <div className="space-y-2 text-sm text-gray-600">
-                <div className="flex items-center">
-                  <FaMapMarkerAlt className="mr-2 text-primary" />
-                  {project.location}
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center text-gray-600">
+                    <FaMapMarkerAlt className="mr-2 text-primary-600 flex-shrink-0" />
+                    <span>{project.location}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600">
+                    <FaCalendar className="mr-2 text-primary-600 flex-shrink-0" />
+                    <span>{project.period}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600">
+                    <FaMoneyBillWave className="mr-2 text-primary-600 flex-shrink-0" />
+                    <span>{project.amount}</span>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <FaCalendar className="mr-2 text-primary" />
-                  {project.period}
-                </div>
-                <div className="flex items-center">
-                  <FaMoneyBillWave className="mr-2 text-primary" />
-                  {project.amount}
-                </div>
+
+                <p className="text-gray-700 text-sm mt-4 line-clamp-2">
+                  {project.description}
+                </p>
               </div>
-
-              <p className="text-gray-700 mt-4 text-sm">{project.description}</p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </Card>
+            </motion.div>
           ))}
         </div>
 
+        {/* 모달 */}
         {selectedProject && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="h-64 bg-gradient-to-br from-primary to-blue-700 rounded-lg mb-6 flex items-center justify-center">
-                <div className="text-white text-center p-6">
-                  <h3 className="font-bold text-2xl mb-3">
-                    {selectedProject.title}
-                  </h3>
-                  <span className="inline-block bg-secondary px-4 py-2 rounded-full">
-                    {selectedProject.category}
-                  </span>
-                </div>
-              </div>
-
-              <h3 className="text-2xl font-bold mb-4">{selectedProject.client}</h3>
-
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center text-gray-700">
-                  <FaMapMarkerAlt className="mr-3 text-primary text-xl" />
-                  <span>{selectedProject.location}</span>
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <FaCalendar className="mr-3 text-primary text-xl" />
-                  <span>{selectedProject.period}</span>
-                </div>
-                <div className="flex items-center text-gray-700">
-                  <FaMoneyBillWave className="mr-3 text-primary text-xl" />
-                  <span>{selectedProject.amount}</span>
-                </div>
-              </div>
-
-              <p className="text-gray-700 mb-6">{selectedProject.description}</p>
-
-              <div className="flex flex-wrap gap-2 mb-6">
-                {selectedProject.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-
               <button
                 onClick={() => setSelectedProject(null)}
-                className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                className="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
               >
-                닫기
+                <FaTimes className="text-gray-600" />
               </button>
+
+              <div className="bg-primary-600 text-white p-8">
+                <span className="inline-block bg-white/20 px-3 py-1 rounded-full text-sm mb-3">
+                  {selectedProject.category}
+                </span>
+                <h2 className="text-2xl font-bold mb-2">{selectedProject.title}</h2>
+                <p className="text-blue-100">{selectedProject.client}</p>
+              </div>
+
+              <div className="p-8">
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center text-gray-700">
+                    <FaMapMarkerAlt className="mr-3 text-primary-600 text-xl flex-shrink-0" />
+                    <span>{selectedProject.location}</span>
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <FaCalendar className="mr-3 text-primary-600 text-xl flex-shrink-0" />
+                    <span>{selectedProject.period}</span>
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <FaMoneyBillWave className="mr-3 text-primary-600 text-xl flex-shrink-0" />
+                    <span>{selectedProject.amount}</span>
+                  </div>
+                </div>
+
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  {selectedProject.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {selectedProject.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </div>
         )}
