@@ -8,7 +8,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -33,38 +33,44 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
+        scrolled
+          ? 'bg-white shadow-md py-3'
+          : 'bg-transparent py-5'
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <div
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <button
             onClick={() => scrollToSection('hero')}
-            className="cursor-pointer"
+            className="flex flex-col cursor-pointer group"
           >
             <h1
-              className={`text-xl md:text-2xl font-bold transition-colors ${
-                scrolled ? 'text-primary' : 'text-white'
-              }`}
+              className={`text-lg md:text-xl font-bold transition-colors ${
+                scrolled ? 'text-primary-700' : 'text-white'
+              } group-hover:text-accent-600`}
             >
               {companyInfo.name}
             </h1>
             <p
-              className={`text-xs md:text-sm ${
-                scrolled ? 'text-gray-600' : 'text-gray-200'
+              className={`text-xs transition-colors ${
+                scrolled ? 'text-gray-500' : 'text-blue-100'
               }`}
             >
               {companyInfo.nameEn}
             </p>
-          </div>
+          </button>
 
-          <nav className="hidden md:flex space-x-8">
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center space-x-1">
             {menuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`font-medium transition-colors hover:text-secondary ${
-                  scrolled ? 'text-gray-800' : 'text-white'
+                className={`px-4 py-2 font-medium rounded-lg transition-all ${
+                  scrolled
+                    ? 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
+                    : 'text-white hover:bg-white/10'
                 }`}
               >
                 {item.label}
@@ -72,25 +78,33 @@ const Header = () => {
             ))}
           </nav>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden text-2xl ${
-              scrolled ? 'text-primary' : 'text-white'
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              scrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10'
             }`}
           >
-            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+            {mobileMenuOpen ? (
+              <FaTimes className="text-2xl" />
+            ) : (
+              <FaBars className="text-2xl" />
+            )}
           </button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg">
-          <nav className="flex flex-col space-y-4 p-6">
-            {menuItems.map((item) => (
+        <div className="md:hidden bg-white shadow-lg mt-2 rounded-lg mx-4 overflow-hidden animate-fadeIn">
+          <nav className="flex flex-col">
+            {menuItems.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-gray-800 font-medium hover:text-secondary text-left"
+                className={`px-6 py-4 text-left font-medium text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors ${
+                  index !== menuItems.length - 1 ? 'border-b border-gray-100' : ''
+                }`}
               >
                 {item.label}
               </button>
