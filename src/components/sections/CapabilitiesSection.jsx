@@ -7,7 +7,7 @@ import { technicians, stats } from '../../data/companyInfo';
 const CapabilitiesSection = () => {
   return (
     <section id="capabilities" className="section-padding bg-gray-50">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         {/* 섹션 헤더 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -25,7 +25,7 @@ const CapabilitiesSection = () => {
         </motion.div>
 
         {/* 통계 카드 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ const CapabilitiesSection = () => {
             보유 기술인력
           </h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {technicians.map((tech, index) => (
               <motion.div
                 key={index}

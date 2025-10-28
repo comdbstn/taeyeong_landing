@@ -14,7 +14,7 @@ const PortfolioSection = () => {
 
   return (
     <section id="portfolio" className="section-padding bg-white">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         {/* 섹션 헤더 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,7 +31,7 @@ const PortfolioSection = () => {
           </p>
 
           {/* 카테고리 필터 */}
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map((category) => (
               <button
                 key={category}
@@ -49,7 +49,7 @@ const PortfolioSection = () => {
         </motion.div>
 
         {/* 포트폴리오 그리드 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {filteredPortfolios.map((project, index) => (
             <motion.div
               key={project.id}

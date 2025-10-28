@@ -8,7 +8,7 @@ import { partners, testimonials } from '../../data/partners';
 const PartnersSection = () => {
   return (
     <section id="partners" className="section-padding bg-gray-50">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         {/* 섹션 헤더 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -26,7 +26,7 @@ const PartnersSection = () => {
         </motion.div>
 
         {/* 파트너 슬라이더 */}
-        <div className="mb-20">
+        <div className="mb-20 max-w-6xl mx-auto">
           <Swiper
             modules={[Autoplay]}
             spaceBetween={24}
@@ -78,7 +78,7 @@ const PartnersSection = () => {
             고객 후기
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.id}

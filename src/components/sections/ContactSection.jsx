@@ -21,7 +21,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="section-padding bg-white">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         {/* 섹션 헤더 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ const ContactSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* 연락처 정보 */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
